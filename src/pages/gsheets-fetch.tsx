@@ -1,7 +1,7 @@
 import { api } from "~/utils/api";
 
 function Page() {
-  const spreadsheetData = api.gsheets.getSpreadsheetMetaById.useQuery({
+  const spreadsheetData = api.gsheets.getSpreadsheetValuesById.useQuery({
     id: "1315KoUHrK7LkZPqv9X1bNbzmivezStZzkhkb-R5jLvw",
   });
 
