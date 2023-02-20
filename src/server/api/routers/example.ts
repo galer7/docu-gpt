@@ -5,6 +5,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
+import { getAccessToken } from "../utils";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -21,5 +22,9 @@ export const exampleRouter = createTRPCRouter({
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
+  }),
+
+  getAccessToken: protectedProcedure.query(async ({ ctx }) => {
+    return getAccessToken(ctx.session.user.id);
   }),
 });
