@@ -5,31 +5,63 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getAccessToken } from "../utils";
 
 export const gsheetsRouter = createTRPCRouter({
-  getSpreadsheetById: protectedProcedure
+  /**
+   * Get values of first sheet of spreadsheet
+   */
+  getSpreadsheetValuesById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input: { id }, ctx }) => {
       const accessToken = await getAccessToken(ctx.session.user.id);
 
       // TODO: Maybe use GApis here?
-      const spreadsheetRes = await axios.get<Spreadsheet>(
-        `https://sheets.googleapis.com/v4/spreadsheets/${id}`,
+      const response = await axios.get<SpreadsheetValuesData>(
+        `https://sheets.googleapis.com/v4/spreadsheets/${id}/values/A:Z`,
         {
-          params: { includeGridData: true },
           headers: {
             Authorization: `Bearer ${accessToken as string}`,
           },
         }
       );
 
+      return response.data;
+    }),
 
-      return spreadsheetRes.data.sheets[0].data;
+  /**
+   * Get merged status for cells.
+   * This will help us determine tables (?)
+   */
+  getSpreadsheetMetaById: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input: { id }, ctx }) => {
+      const accessToken = await getAccessToken(ctx.session.user.id);
+
+      const response = await axios.get<SpreadsheetMetaData>(
+        `https://sheets.googleapis.com/v4/spreadsheets/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken as string}`,
+          },
+        }
+      );
+
+      return response.data.sheets[0].merges;
     }),
 });
 
-interface Spreadsheet {
+interface SpreadsheetValuesData {
+  values: Array<Array<string>>;
+}
+
+interface SpreadsheetMetaData {
   sheets: [
     {
-      data: Record<string, never>;
+      merges: {
+        sheetId: number;
+        startRowIndex: number;
+        endRowIndex: number;
+        startColumnIndex: number;
+        endColumnIndex: number;
+      }[];
     }
   ];
 }

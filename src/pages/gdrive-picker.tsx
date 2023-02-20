@@ -2,12 +2,9 @@ import useDrivePicker from "react-google-drive-picker";
 
 import { api } from "~/utils/api";
 
-function Page() {
+function GoogleDrivePicker() {
   const [openPicker] = useDrivePicker();
   const accessTokenQuery = api.example.getAccessToken.useQuery();
-  const spreadsheetData = api.gsheets.getSpreadsheetById.useQuery({
-    id: "1315KoUHrK7LkZPqv9X1bNbzmivezStZzkhkb-R5jLvw",
-  });
 
   const handleOpenPicker = () => {
     openPicker({
@@ -37,4 +34,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default GoogleDrivePicker;
