@@ -23,6 +23,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-google-drive-picker": "^1.2.0",
+    "react-spreadsheet": "^0.7.7",
+    "scheduler": "^0.23.0",
     "superjson": "1.9.1",
     "zod": "^3.20.2"
   },

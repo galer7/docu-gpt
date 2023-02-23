@@ -23,7 +23,14 @@ export const gsheetsRouter = createTRPCRouter({
         }
       );
 
-      return response.data;
+      const rawValues = response.data.values;
+      const height = rawValues.length;
+
+      // "Reduce" all rows to their length, then spread in Math.max
+      // to find longest row
+      const width = Math.max(...rawValues.flatMap((cols) => cols.length));
+
+      return { rawData: response.data, height, width };
     }),
 
   /**
