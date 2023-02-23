@@ -22,6 +22,7 @@ const server = z.object({
   NEXT_PUBLIC_GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   NEXT_PUBLIC_DEVLEOPER_KEY: z.string(),
+  OPEN_AI_KEY: z.string(),
 });
 
 /**
@@ -46,6 +47,7 @@ const processEnv = {
   NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   NEXT_PUBLIC_DEVLEOPER_KEY: process.env.NEXT_PUBLIC_DEVLEOPER_KEY,
+  OPEN_AI_KEY: process.env.OPEN_AI_KEY,
 };
 
 // Don't touch the part below

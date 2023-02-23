@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { exampleRouter } from "~/server/api/routers/example";
 import { gsheetsRouter } from "./routers/gsheets";
+import { openAiRouter } from "./routers/openai";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { gsheetsRouter } from "./routers/gsheets";
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   gsheets: gsheetsRouter,
+  openAi: openAiRouter,
 });
 
 // export type definition of API
