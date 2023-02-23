@@ -1,31 +1,31 @@
-# docu-gpt
-
-## Premise
-
-A lot of companies (still) revolve around using Excel / Google Sheets / other spreadsheet alternatives for creating legal documents.
-Using ChatGPT can help fill in placeholder values for document templates.
-Further more, we can containerize a "persona" for any entity that we are filling a document for. Example:
-- For a small company (e.g. one employee, you!), there would be only one person, namely your company
-- For a medium-sized company, we start to have other employees. We can save them some time be pre-filling legal documents for them, for example. Also, if this company starts having multiple clients, you can see how this can become very useful very fast.
-- 
-Idea: The concept of threads/discussions used by OpenAI's ChatGPT can come in in this "containerization".
-
-Usually, filling documents is based on replacing placeholder character formations (such as "...", "......", "________" etc.) with your own information. Each time we encounter such a group of characters, we can ask ChatGPT to do 2 things for us:
-1. If you have any apropri information about us, please fill it in for us
-2. If you don't, can you give a _VARIABLE_ name that would suit this placeholder value?
-
-A variable, in this context, would be the atomic unit of the user's "persona". Since ChatGPT will complete the blank fields for us, why not also ask him to name the variables that will hold these values?
-
-## Next steps
-
-- [ ] fetch spreadsheet values (& format, namely info regarding cell merging) from google sheets
-- [ ] add these values in some sort of representation layer (not a spreadsheet implementation just yet)
-- [ ] run main instruction on resulted formatted lines
-- [ ] with saved format from 1st step, feed back data into Google Sheets spreadsheet (you can do the same for an XLSX file)
-- [ ] run export POST route => PDF file
+- [x] put fetched text in a spreadsheet
+  - [ ] will have to implement merged cells at some point, which react-spreadsheet does not support yet
+- [ ] implement access_token refresh for next-auth
+  - quick fix: delete account entry from the table and re-login
+- [ ] integrate OpenAI
+- [ ] finish google drive picker
 
 
-## Future ideas
+User journey:
+1. Show google drive picker
+2. User chooses a spreadsheet
+3. capture spreadsheetId -> fetch using `getSpreadsheetValuesById` query
+4. paint values in spreadsheet component
+5. run text in ChatGPT
+   1. IDEA: we can generate ASCII table for chat gpt prompt. This can help with table context, like this scenario:
 
-- monthly documents generation -> do you have some time-variable data to insert in your document?
-- you can use ChatGPT to insert other data in form of cells / tables
+```
+    +-------+------+----------+
+    | Index | Name | Contract |
+    +-------+------+----------+
+    |     1 | A    |  ......  |
+    |     2 | B    |          |
+    +-------+------+----------+
+```
+6. run diff between original template vs the new one filled with values
+7. (!!!) do the hover thingy over differences
+   1. 
+8. (OPTIONAL) let user fill other cells
+9.  user clicks export -> bulk write to a new spreadsheet in user's Google Drive
+10. export to pdf from this new spreadsheet
+11. serve pdf to client & delete temporary spreadsheet

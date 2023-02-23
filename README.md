@@ -1,28 +1,31 @@
-# Create T3 App
+# docu-gpt
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Premise
 
-## What's next? How do I make an app with this?
+A lot of companies (still) revolve around using Excel / Google Sheets / other spreadsheet alternatives for creating legal documents.
+Using ChatGPT can help fill in placeholder values for document templates.
+Further more, we can containerize a "persona" for any entity that we are filling a document for. Example:
+- For a small company (e.g. one employee, you!), there would be only one person, namely your company
+- For a medium-sized company, we start to have other employees. We can save them some time be pre-filling legal documents for them, for example. Also, if this company starts having multiple clients, you can see how this can become very useful very fast.
+- 
+Idea: The concept of threads/discussions used by OpenAI's ChatGPT can come in in this "containerization".
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Usually, filling documents is based on replacing placeholder character formations (such as "...", "......", "________" etc.) with your own information. Each time we encounter such a group of characters, we can ask ChatGPT to do 2 things for us:
+1. If you have any apropri information about us, please fill it in for us
+2. If you don't, can you give a _VARIABLE_ name that would suit this placeholder value?
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+A variable, in this context, would be the atomic unit of the user's "persona". Since ChatGPT will complete the blank fields for us, why not also ask him to name the variables that will hold these values?
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Next steps
 
-## Learn More
+- [ ] fetch spreadsheet values (& format, namely info regarding cell merging) from google sheets
+- [ ] add these values in some sort of representation layer (not a spreadsheet implementation just yet)
+- [ ] run main instruction on resulted formatted lines
+- [ ] with saved format from 1st step, feed back data into Google Sheets spreadsheet (you can do the same for an XLSX file)
+- [ ] run export POST route => PDF file
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Future ideas
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- monthly documents generation -> do you have some time-variable data to insert in your document?
+- you can use ChatGPT to insert other data in form of cells / tables
